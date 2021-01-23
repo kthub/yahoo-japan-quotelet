@@ -1,5 +1,5 @@
 # Yahoo Japan Quotelet
-GnuCashから評価額を自動的に取得するモジュールです。  
+GnuCashから評価額を自動的に取得するためのモジュールです。  
 Yahoo!ファイナンスのwebページをスクレイピングして評価額を取得します。  
 このモジュールはPerlのFinance::QuoteのQuoteletとして作成されており、Finance::Quoteに追加しておくことでGnuCashのGUIから設定して利用可能となります。
 
