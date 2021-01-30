@@ -6,8 +6,8 @@ Yahoo!ファイナンスのwebページをスクレイピングして評価額�
 ## ファイルの説明
 [モジュール]
 ```
-Finance/Quote/YahooJapanA.pm : yahoo_japan_a タイプのQuotelet
-Finance/Quote/YahooJapanB.pm : yahoo_japan_b タイプのQuotelet
+Finance/Quote/YahooJapanA.pm : yahoo_japan_a タイプのQuotelet（古いHTML用。Web::ScraperでstoksPriceを取得）
+Finance/Quote/YahooJapanB.pm : yahoo_japan_b タイプのQuotelet（新しいHTML用。HTML内のJSONをパース）
 ```
 [テストコード]
 ```
@@ -17,7 +17,7 @@ testYahooJapanB.pl  : YahooJapanBモジュールのテストコード
 ```
 
 ## インストール方法
-- Perlのモジュールディレクトリの下記のパスにモジュールをコピー（パスは環境に依存するため適切に読み替えてください）
+- Perlのモジュールディレクトリの下記のパスにモジュールをコピー（パスは環境に依存するため適切に読み替える）
 ```
 /Library/Perl/5.28/Finance/Quote
 ```

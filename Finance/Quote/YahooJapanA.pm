@@ -1,38 +1,39 @@
 #!/usr/bin/perl -w
 #
-# Finance::Quote::YahooJapan2 module.
+# Finance::Quote::YahooJapanA module.
 #
 # To install this module, follow the steps below.
-# 1. Copy YahooJapan2.pm to the existing Finance/Quote directory.
+# 1. Copy YahooJapanA.pm to the existing Finance/Quote directory.
 # 2. Add following environment variable to the system profile.
-#    $ export FQ_LOAD_QUOTELET = '-defaults YahooJapan'
+#    $ export FQ_LOAD_QUOTELET = '-defaults YahooJapanA'
 # 3. Specify "Account Code" and "Type of Quote Source" (On-line updating)
 #    on the "New Account" dialog of Gnucash.
 #
 #    Account Code			: code of Yahoo! Japan (ex. "29311041")
-#    Type of Quote Source	: "yahoo_japan_two" (as unknown source) 
+#    Type of Quote Source	: "yahoo_japan_a" (as unknown source) 
 #
-# 2020/1/3 Keiichi Tsuda <keiichi.tsuda@gmail.com>
+# 2020/01/03 Keiichi Tsuda <keiichi.tsuda@gmail.com> Created.
+# 2021/01/30 Keiichi Tsuda <keiichi.tsuda@gmail.com> Rename the module name.
 #
 
-package Finance::Quote::YahooJapan2;
+package Finance::Quote::YahooJapanA;
 use Web::Scraper;
 use URI;
 use strict;
 use warnings;
 
-our $VERSION = '1.0.0'; # VERSION
+our $VERSION = '1.0.0';
 
 sub methods {
-    return (yahoo_japan_two => \&yahoo_japan_two);
+    return (yahoo_japan_a => \&yahoo_japan_a);
 }
 
 sub labels {
-    return (yahoo_japan_two => ['method', 'success', 'symbol', 'name', 'date',
-                            'isodate', 'time', 'currency', 'price', 'last', 'errormsg']);
+    return (yahoo_japan_a => ['method', 'success', 'symbol', 'name', 'date',
+                                'isodate', 'time', 'currency', 'price', 'last', 'errormsg']);
 }
 
-sub yahoo_japan_two {
+sub yahoo_japan_a {
     my ($quoter, @symbols) = @_;
     return unless @symbols; # do nothing if no symbols.
 
@@ -42,7 +43,7 @@ sub yahoo_japan_two {
     # Generate scraper for Yahoo! Japan using Web::Scraper.
 	my $scraper = scraper {
 		process 'td[class="stoksPrice"]', 'price' => 'TEXT';
-		#process 'th[class="symbol"] > h1', 'name' => 'TEXT';
+		#process 'th[class="symbol"] > h1', 'name' => 'TEXT'; # to avoid character-encoding related problems
 		process 'dd[class="yjSb real"] > span', 'date' => 'TEXT';
 	};
     
@@ -68,21 +69,21 @@ sub _save_result {
     # set result value.
     $info{$code, 'symbol'}   = $code;
     $info{$code, 'currency'} = 'JPY';
-    $info{$code, 'method'}   = 'yahoo_japan_two';
-    #$info{$code, 'name'}     = $res->{'name'};
+    $info{$code, 'method'}   = 'yahoo_japan_a';
+    #$info{$code, 'name'}     = $res->{'name'}; # to avoid character-encoding related problems
     $info{$code, 'name'}     = $code;
     $info{$code, 'date'}     = $res->{'date'};
     $info{$code, 'time'}     = '00:00';
     
     # set price.
     my $price = $res->{'price'};
-    $price =~ s/,//g; # exclude comma.
+    $price =~ s/,//g; # exclude comma
     $info{$code, 'last'}    = $price;
     $info{$code, 'price'}   = $price;
 
     # validate quote.
     my @errors = ();
-    push @errors, 'Invalid name.' if ($info{$code, 'name'} =~ /^\s*$/); # if all space => error.
+    push @errors, 'Invalid name.' if ($info{$code, 'name'} =~ /^\s*$/); # if all space => error
     push @errors, 'Invalid price.' if ($info{$code, 'price'} eq '');
     if ($info{$code, 'date'} eq '') {
         push @errors, 'Invalid datetime.';
@@ -101,7 +102,7 @@ sub _save_result {
 }
 
 sub _convert_to_isodate() {
-    my $datetime = shift; # datetime format is MM/DD
+    my $datetime = shift; # datetime format : MM/DD
     my @now = localtime;
     my ($year, $mon, $mday, $time) = ($now[5] + 1900, 0, 0, '15:00:00');
 
