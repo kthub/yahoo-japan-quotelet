@@ -65,21 +65,12 @@ sub yahoo_japan_a {
 sub _save_result {
     my ($quoter, $code, $res) = @_;
     my %info = ();
-    
-    # set price value
+
+    # set values
     my $price = $res->{'price'};
-
-    # when the market is not open, the value "---" is returned.
-    # will ignore such case
-    if ($price eq "---") {
-        return %info;
-    }
-
     $price =~ s/,//g; # remove comma
-    $info{$code, 'last'}    = $price;
-    $info{$code, 'price'}   = $price;
-
-    # set result values
+    $info{$code, 'last'}     = $price;
+    $info{$code, 'price'}    = $price;
     $info{$code, 'symbol'}   = $code;
     $info{$code, 'currency'} = 'JPY';
     $info{$code, 'method'}   = 'yahoo_japan_a';
@@ -91,7 +82,7 @@ sub _save_result {
     # validate quote
     my @errors = ();
     push @errors, 'Invalid name.' if ($info{$code, 'name'} =~ /^\s*$/); # if all space => error
-    push @errors, 'Invalid price.' if ($info{$code, 'price'} eq '');
+    push @errors, 'Invalid price.' if ($info{$code, 'price'} eq '' || $info{$code, 'price'} eq '---');
     if ($info{$code, 'date'} eq '') {
         push @errors, 'Invalid datetime.';
     } else {

@@ -29,3 +29,6 @@ testYahooJapanB.pl  : YahooJapanBモジュールのテストコード
 ```
 @modules = qw/AEX AIAHK AlphaVantage ASEGR ASX BMONesbittBurns BSERO Bourso Cdnfundlibrary Citywire CSE Currencies DekaDWS FTPortfolios Fidelity FidelityFixed FinanceCanada FoolFTfunds HU GoldMoney HEX IndiaMutual LeRevenuManInvestments Morningstar MorningstarJP MStaruk NZXPlatinum SEB SIXfunds SIXshares StockHouseCanada TSP TSXTdefunds Tdwaterhouse Tiaacref TNetuk Troweprice TrustnetUnion USFedBonds VWD ZA Cominvest Finanzpartner YahooJSONYahoo::Asia Yahoo::Australia Yahoo::Brasil Yahoo::EuropeYahoo::NZ Yahoo::USA YahooYQL ZA_UnitTrusts YahooJapanA YahooJapanB/; }
 ```
+## 開発ノート
+- `%info`の`success`を`0`で戻すとGnuCash上は（システムエラーではなく）見積もりが取得できなかったという扱いになる。  
+- 平日の相場が開く前のタイミングでは価格に`---`が戻される。YahooJapanAではこれを`success=0`として扱っている。  
