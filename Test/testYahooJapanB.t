@@ -5,9 +5,9 @@
 use strict;
 use warnings;
 use Finance::Quote;
-use Math::Round;
-use Logger::Simple;
-use lib '.';
+#use Math::Round;
+#use Logger::Simple;
+#use lib '.';
 #use ScrapeUtil;
 
 # インスタンスの生成

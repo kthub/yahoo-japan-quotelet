@@ -1,21 +1,21 @@
 #!/usr/bin/perl -w
 #
-# Finance::Quote::YahooJapan module.
+# Finance::Quote::YahooJapanB module.
 #
 # To install this module, follow the steps below.
-# 1. Copy YahooJapan.pm to the existing Finance/Quote directory.
+# 1. Copy YahooJapanB.pm to the existing Finance/Quote directory.
 # 2. Add following environment variable to the system profile.
-#    $ export FQ_LOAD_QUOTELET = '-defaults YahooJapan'
+#    $ export FQ_LOAD_QUOTELET = '-defaults YahooJapanB'
 # 3. Specify "Account Code" and "Type of Quote Source" (On-line updating)
 #    on the "New Account" dialog of Gnucash.
 #
 #    Account Code			: code of Yahoo! Japan (ex. "29311041")
-#    Type of Quote Source	: "yahoo_japan" (as unknown source) 
+#    Type of Quote Source	: "yahoo_japan_b" (as unknown source) 
 #
 # 2019/08/30 Keiichi Tsuda <keiichi.tsuda@gmail.com> Revised for new format.
 # 2015/12/27 Keiichi Tsuda <keiichi.tsuda@gmail.com> Created.
 #
-package Finance::Quote::YahooJapan;
+package Finance::Quote::YahooJapanB;
 use strict;
 use warnings;
 use LWP::UserAgent;
@@ -25,30 +25,30 @@ use JSON;
 our $VERSION = '1.0.0'; # VERSION
 
 sub methods {
-    return (yahoo_japan => \&yahoo_japan);
+    return (yahoo_japan_b => \&yahoo_japan_b);
 }
 
 sub labels {
-    return (yahoo_japan => ['method', 'success', 'symbol', 'name', 'date',
+    return (yahoo_japan_b => ['method', 'success', 'symbol', 'name', 'date',
                             'isodate', 'time', 'currency', 'price', 'last', 'errormsg']);
 }
 
-sub yahoo_japan {
+sub yahoo_japan_b {
     my ($quoter, @symbols) = @_;
-    return unless @symbols; # do nothing if no symbols.
+    return unless @symbols; # do nothing if no symbols
 
     my $url_base = 'http://stocks.finance.yahoo.co.jp/stocks/detail/';
     my %info = ();
     
-    # Account Code Loop.
+    # Account Code Loop
     foreach my $code (@symbols) {
-    	# Target URL.
+    	# Target URL
     	my $url = new URI($url_base . "?code=" . $code);
     	
-    	# scrape.
+    	# scrape
     	my %res = _scrape_url($url);
     	
-    	# save result.
+    	# save result
 		%info = (%info, _save_result($quoter, $code, %res));
     }
 	
@@ -102,35 +102,35 @@ sub _save_result {
     my ($quoter, $code, %res) = @_;
     my %info = ();
     
-    # set result value.
+    # set result value
     $info{$code, 'symbol'}   = $code;
     $info{$code, 'currency'} = 'JPY';
-    $info{$code, 'method'}   = 'yahoo_japan';
+    $info{$code, 'method'}   = 'yahoo_japan_b';
     
-    # set "code" as name to avoid character encoding error.
+    # set "code" as a name to avoid character encoding problem
     #$info{$code, 'name'}     = $res{'name'};
     $info{$code, 'name'}     = $code;
     
     $info{$code, 'date'}     = $res{'date'};
     $info{$code, 'time'}     = '00:00';
     
-    # set price.
+    # set price
     my $price = $res{'price'};
-    $price =~ s/,//g; # exclude comma.
+    $price =~ s/,//g; # remove comma
     $info{$code, 'last'}    = $price;
     $info{$code, 'price'}   = $price;
 
-    # validate quote.
+    # validate quote
     my @errors = ();
-    push @errors, 'Invalid name.' if ($info{$code, 'name'} =~ /^\s*$/); # if all space => error.
+    push @errors, 'Invalid name.' if ($info{$code, 'name'} =~ /^\s*$/); # if all space => error
     push @errors, 'Invalid price.' if ($info{$code, 'price'} eq '');
     if ($info{$code, 'date'} eq '') {
         push @errors, 'Invalid datetime.';
     } else {
-    	# update date value to the isodate format.
+    	# update date value to the isodate format
     	my $isodate = _convert_to_isodate($info{$code, 'date'});
     	
-    	# update date/isodate value using Quote.pm sub-routine.
+    	# update date/isodate value using Quote.pm sub-routine
         $quoter->store_date(\%info, $code, { isodate => $isodate });
     }
 
@@ -148,7 +148,7 @@ sub _convert_to_isodate() {
     if ($datetime =~ /(\d{1,2})\/(\d{1,2})/) {
         # MM/DD
         ($mon, $mday) = ($1, $2);
-        $year-- if ($now[4] + 1 < $mon); # MM may point last December in January.
+        $year-- if ($now[4] + 1 < $mon); # MM may point last December in January
     }
 
     my $date = sprintf '%04d-%02d-%02d', $year, $mon, $mday; #isodate format

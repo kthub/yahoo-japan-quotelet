@@ -35,27 +35,27 @@ sub labels {
 
 sub yahoo_japan_a {
     my ($quoter, @symbols) = @_;
-    return unless @symbols; # do nothing if no symbols.
+    return unless @symbols; # do nothing if no symbols
 
     my $url_base = 'http://stocks.finance.yahoo.co.jp/stocks/detail/';
     my %info = ();
     
-    # Generate scraper for Yahoo! Japan using Web::Scraper.
+    # Generate scraper for Yahoo! Japan using Web::Scraper
 	my $scraper = scraper {
 		process 'td[class="stoksPrice"]', 'price' => 'TEXT';
 		#process 'th[class="symbol"] > h1', 'name' => 'TEXT'; # to avoid character-encoding related problems
 		process 'dd[class="yjSb real"] > span', 'date' => 'TEXT';
 	};
     
-    # Account Code Loop.
+    # Account Code Loop
     foreach my $code (@symbols) {
-    	# Target URL.
+    	# Target URL
     	my $url = new URI($url_base . "?code=" . $code);
     	
-    	# scrape.
+    	# scrape
     	my $res = $scraper->scrape($url);
     	
-    	# save result.
+    	# save result
 		%info = (%info, _save_result($quoter, $code, $res));
     }
 	
@@ -66,7 +66,20 @@ sub _save_result {
     my ($quoter, $code, $res) = @_;
     my %info = ();
     
-    # set result value.
+    # set price value
+    my $price = $res->{'price'};
+
+    # when the market is not open, the value "---" is returned.
+    # will ignore such case
+    if ($price eq "---") {
+        return %info;
+    }
+
+    $price =~ s/,//g; # remove comma
+    $info{$code, 'last'}    = $price;
+    $info{$code, 'price'}   = $price;
+
+    # set result values
     $info{$code, 'symbol'}   = $code;
     $info{$code, 'currency'} = 'JPY';
     $info{$code, 'method'}   = 'yahoo_japan_a';
@@ -74,24 +87,18 @@ sub _save_result {
     $info{$code, 'name'}     = $code;
     $info{$code, 'date'}     = $res->{'date'};
     $info{$code, 'time'}     = '00:00';
-    
-    # set price.
-    my $price = $res->{'price'};
-    $price =~ s/,//g; # exclude comma
-    $info{$code, 'last'}    = $price;
-    $info{$code, 'price'}   = $price;
 
-    # validate quote.
+    # validate quote
     my @errors = ();
     push @errors, 'Invalid name.' if ($info{$code, 'name'} =~ /^\s*$/); # if all space => error
     push @errors, 'Invalid price.' if ($info{$code, 'price'} eq '');
     if ($info{$code, 'date'} eq '') {
         push @errors, 'Invalid datetime.';
     } else {
-    	# update date value to the isodate format.
+    	# update date value to the isodate format
     	my $isodate = _convert_to_isodate($info{$code, 'date'});
     	
-    	# update date/isodate value using Quote.pm sub-routine.
+    	# update date/isodate value using Quote.pm sub-routine
         $quoter->store_date(\%info, $code, { isodate => $isodate });
     }
 
@@ -109,7 +116,7 @@ sub _convert_to_isodate() {
     if ($datetime =~ /(\d{1,2})\/(\d{1,2})/) {
         # MM/DD
         ($mon, $mday) = ($1, $2);
-        $year-- if ($now[4] + 1 < $mon); # MM may point last December in January.
+        $year-- if ($now[4] + 1 < $mon); # MM may point last December in January
     }
 
     my $date = sprintf '%04d-%02d-%02d', $year, $mon, $mday; #isodate format
