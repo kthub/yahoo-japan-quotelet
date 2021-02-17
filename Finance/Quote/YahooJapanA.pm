@@ -104,12 +104,6 @@ sub _convert_to_isodate() {
     my @now = localtime;
     my ($year, $mon, $mday, $time) = ($now[5]+1900, $now[4]+1, $now[3], '15:00:00');
 
-    print "before conversion" . "\n";
-    print $year . "\n";
-    print $mon . "\n";
-    print $mday . "\n";
-    print $time . "\n";
-
     if ($datetime =~ /(\d{1,2})\/(\d{1,2})/) {
         # MM/DD
         ($mon, $mday) = ($1, $2);
@@ -118,12 +112,6 @@ sub _convert_to_isodate() {
         # HH:mm
         $time = $1 . ":" . $2 . ":" . "00";
     }
-
-    print "after conversion" . "\n";
-    print $year . "\n";
-    print $mon . "\n";
-    print $mday . "\n";
-    print $time . "\n";
 
     my $date = sprintf '%04d-%02d-%02d', $year, $mon, $mday; #isodate format
     return $date;
