@@ -17,6 +17,13 @@ testYahooJapanB.pl  : YahooJapanBモジュールのテストコード
 ```
 
 ## インストール方法
+- 前提モジュール  
+下記のモジュールをインストールする。Macの場合Perlはデフォルトでインストールされている。  
+```
+- Perl  
+- Finance::Quote  
+- Web::Scraper
+```
 - Perlのモジュールディレクトリの下記のパスにモジュールをコピー（パスは環境に依存するため適切に読み替える）
 ```
 /Library/Perl/5.28/Finance/Quote
