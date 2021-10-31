@@ -39,7 +39,7 @@ testYahooJapanB.pl  : YahooJapanBモジュールのテストコード
 
 ## 開発ノート
 - `%info`の`success`を`0`で戻すとGnuCash上は（システムエラーではなく）見積もりが取得できなかったという扱いになる。  
-- 平日の相場が開く前のタイミングでは価格に`---`が戻される。YahooJapanAではこれを`success`を`0（取得エラー）`として扱っている。  
+- 平日の相場が開く前のタイミングでは価格に`---`が戻される。YahooJapanAではこれを`success=1（取得エラー）`として扱っている。  
 
 ## ToDoList
 - GnuCashでの設定方法を記載  
