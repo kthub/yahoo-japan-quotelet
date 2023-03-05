@@ -1,12 +1,13 @@
 #!/bin/sh
+FQ_ROOT=`dirname $(perldoc -l Finance::Quote)`
+QUOTELETS="YahooJapanA.pm YahooJapanB.pm"
 
-# copy modules
-sudo cp Finance/Quote/YahooJapanA.pm /Library/Perl/5.28/Finance/Quote
-sudo cp Finance/Quote/YahooJapanB.pm /Library/Perl/5.28/Finance/Quote
+# install
+for QUOTELET in $QUOTELETS; do
+  sudo cp lib/Finance/Quote/${QUOTELET} ${FQ_ROOT}/Quote
+  sudo chmod 444 ${FQ_ROOT}/Quote/${QUOTELET}
+  sudo chown root:root ${FQ_ROOT}/Quote/${QUOTELET}
+done
 
-# change permission
-sudo chmod 444 /Library/Perl/5.28/Finance/Quote/YahooJapanA.pm
-sudo chown root:wheel /Library/Perl/5.28/Finance/Quote/YahooJapanA.pm
-
-sudo chmod 444 /Library/Perl/5.28/Finance/Quote/YahooJapanB.pm
-sudo chown root:wheel /Library/Perl/5.28/Finance/Quote/YahooJapanB.pm
+# test
+perl t/testYahooJapanB.t

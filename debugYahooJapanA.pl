@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 ##
 ## Debug YahooJapanA
 ##
@@ -11,11 +11,11 @@ my $q = Finance::Quote->new();
 $q->timeout(30);
 $q->set_currency("JPY"); # Set Local Currency to JPY
 
-my $exchange_yj = "yahoo_japan_a";
-my @symbols_yj = ("1326", "1542");
+my $exchange_yj = "yahoo_japan_b";
+my @symbols_yj = ("03311187", "0431Q169");
 my %itinfo_yj = $q->fetch($exchange_yj,@symbols_yj);
 
-print "[YahooJapanA Module Sample]\n";
+print "[YahooJapanB Module Sample]\n";
 foreach my $code (@symbols_yj) {
 	unless ($itinfo_yj{$code,"success"}) {
 		if (defined $itinfo_yj{$code,"errormsg"}) {
