@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 ##
-## Debug YahooJapanA
+## Sample for YahooJapanB
 ##
 use strict;
 use warnings;
@@ -26,7 +26,7 @@ foreach my $code (@symbols_yj) {
 		next;
 	}
 	my $name = $itinfo_yj{$code,"name"};
-	#$name = Encode::encode('utf-8', $name);
+	#$name = Encode::decode('utf-8', $name);
 	my $price = $itinfo_yj{$code,"price"};
 	my $date = $itinfo_yj{$code,"date"};
 	print "$name:\t" . $price . " (" . $date . ")\n";
