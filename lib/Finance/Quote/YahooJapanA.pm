@@ -14,6 +14,7 @@
 #
 # 2020/01/03 Keiichi Tsuda <keiichi.tsuda@gmail.com> Created.
 # 2021/01/30 Keiichi Tsuda <keiichi.tsuda@gmail.com> Rename the module name.
+# 2023/03/18 Keiichi Tsuda <keiichi.tsuda@gmail.com> This module is Deprecated. (Because of Yahoo! HTML spec change)
 #
 
 package Finance::Quote::YahooJapanA;

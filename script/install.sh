@@ -25,8 +25,5 @@ sudo perl updateFQ.pl ${FQ_ROOT}/Quote.pm "${QUOTELETS}"
 
 # test quotelets
 if "${DO_TEST}"; then
-  TESTS="testYahooJapanB.t"
-  for TEST in $TESTS; do
-    perl t/${TEST}
-  done
+  prove t
 fi
