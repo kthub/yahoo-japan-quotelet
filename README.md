@@ -1,7 +1,7 @@
 # Yahoo Japan Quotelet概要
-Yahoo Japan QuoteletはPerlの[Finance::Quote](http://finance-quote.sourceforge.net/)モジュールに組み込むカスタムQuoteletです。  
-Yahoo Japan QuoteletによりFinance::QuoteのAPIを使用して[Yahoo! Japanファイナンス](https://finance.yahoo.co.jp/)のサイトから投資信託等の評価額を取得することが可能となります。  
-Finance::Quoteはフリーの財務ソフトウェアである[GnuCash](https://www.gnucash.org/)で評価額の自動取得のために使用されており、Yahoo Japan QuoteletはこのコンテキストでGnu Cashから呼び出して使用することを想定して作成しています。  
+- Yahoo Japan QuoteletはPerlの[Finance::Quote](http://finance-quote.sourceforge.net/)モジュールに組み込むカスタムQuoteletです。  
+- Yahoo Japan QuoteletによりFinance::QuoteのAPIを使用して[Yahoo! Japanファイナンス](https://finance.yahoo.co.jp/)のサイトから投資信託等の評価額を取得することができます。  
+- Finance::Quoteはフリーの財務ソフトウェアである[GnuCash](https://www.gnucash.org/)で評価額の自動取得のために使用されており、Yahoo Japan QuoteletはこのコンテキストでGnu Cashから呼び出して使用することを想定しています。  
 
 <img src="images/overview.png" alt="Yahoo Japan Quotelet概要図" title="Yahoo Japan Quotelet概要図">
 
