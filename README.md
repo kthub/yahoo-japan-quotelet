@@ -47,12 +47,12 @@
   ```
 
 ## GnuCashの設定方法
-YahooJapanBモジュールをGnuCashで使用するには証券エディターで対象の投資信託のオンライン取得設定を下記のように設定します。  
+YahooJapanBモジュールをGnuCashで使用するには証券エディターで対象の投資信託のオンライン取得設定を設定します。  
+YahooJapanB Quoteletを使用して評価額を取得するには「オンライン相場表を取得」のチェックを有効にして「未知」を選択し、「yahoo_japan_b」を設定します。
+<img src="images/security_editor.png" alt="Security Editor" title="Secutiry Editor">
 
-
-評価額を取得するには価格エディターで「XXXXX」をクリックします。
-
-
+評価額を取得するには価格データベースで「相場表を取得」をクリックします。  
+<img src="images/price_database.png" alt="Price Database" title="Price Database">
 
 ## （参考） 開発メモ
 - `%info`の`success`を`0`で戻すとGnuCash上はシステムエラーとはならない。（見積もりが取得できなかったという扱いになる）  
