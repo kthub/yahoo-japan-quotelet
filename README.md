@@ -41,14 +41,15 @@
   - Finance::QuoteのQuote.pmを更新して`@MODULES`配列に`YahooJapanB`を追加
   - テストを実施してインストールが正常に行われていることを確認
 - インストール手順
-  - `script/install.sh`を実行する。（スクリプトの内容が適切か見直した上で実行することを推奨）
+  - `script/install.sh`を実行する。（上記のインストール概要にある処理を実行します。実行前にスクリプトの内容と環境の整合性が取れていることを確認してください）
   ```
   $ ./script/install.sh
   ```
 
 ## GnuCashの設定方法
-YahooJapanBモジュールをGnuCashで使用するには証券エディターで対象の投資信託のオンライン取得設定を設定します。  
-YahooJapanB Quoteletを使用して評価額を取得するには「オンライン相場表を取得」のチェックを有効にして「未知」を選択し、「yahoo_japan_b」を設定します。
+YahooJapanB QuoteletをGnuCashで使用するには証券エディターで対象の投資信託のオンライン取得情報を設定します。  
+- 「記号／略号」にYahoo! JAPANファイナンスのコード（対象商品のページの左上に出る数値）を設定
+- 「オンライン相場表を取得」のチェックを有効にして「未知」を選択し、「yahoo_japan_b」を設定
 <img src="images/security_editor.png" alt="Security Editor" title="Secutiry Editor">
 
 評価額を取得するには価格データベースで「相場表を取得」をクリックします。  
