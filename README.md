@@ -6,43 +6,54 @@
 <img src="images/overview.png" alt="Yahoo Japan Quotelet概要図" title="Yahoo Japan Quotelet概要図">
 
 ## ファイルの説明
-[モジュール]
-```
-Finance/Quote/YahooJapanA.pm : yahoo_japan_a タイプのQuotelet（古いHTML用。Web::ScraperでstoksPriceを取得）
-Finance/Quote/YahooJapanB.pm : yahoo_japan_b タイプのQuotelet（新しいHTML用。HTML内のJSONをパース）
-```
-[テストコード]
-```
-testFinanceQuote.pl : FinanceQuoteの実行デモ
-testYahooJapanA.pl  : YahooJapanAモジュールのテストコード
-testYahooJapanB.pl  : YahooJapanBモジュールのテストコード
-```
+### Quoteletモジュール
+|ファイル|説明|
+|-----|----|
+|lib/Finance/Quote/YahooJapanA.pm|yahoo_japan_a タイプのQuotelet.（Yahoo! JAPANファイナンスの古いレイアウト用で現在は機能しない）<br>Web::ScraperでstoksPriceを取得する。|
+|lib/Finance/Quote/YahooJapanB.pm|yahoo_japan_b タイプのQuotelet.<br>HTML内のJSONをパースする。|
+
+### サンプルコード
+|ファイル|説明|
+|-----|----|
+|sample/sampleCurrencyExchangeRate.pl|Finance::Quoteによる為替レート取得のサンプル|
+|sample/sampleStockPrice.pl|Finance::Quoteによる株価取得のサンプル|
+|sample/sampleYahooJapanB|Finance::QuoteでYahooJapanB Quoteletを使用して投資信託の評価額を取得するサンプル|
+
+### テストコード
+|ファイル|説明|
+|-----|----|
+|t/testYahooJapanB.t|YahooJapanBモジュールのテストコード|
+
+### スクリプト
+|ファイル|説明|
+|-----|----|
+|script/install.sh|YahooJapanB Quoteletをインストールするスクリプト|
+|script/updateFQ.pl|インストールスクリプトから呼ばれるPerlのスクリプト<br>（Finance::QuoteのQuote.pmを更新してYahooJapanB Quoteletを組み込む）|
 
 ## インストール方法
 - 前提モジュール  
-下記のモジュールをインストールする。Macの場合Perlはデフォルトでインストールされている。  
-```
-- Perl  
-- Finance::Quote  
-- Web::Scraper
-```
-- Perlのモジュールディレクトリの下記のパスにモジュールをコピー（パスは環境に依存するため適切に読み替える）
-```
-/Library/Perl/5.28/Finance/Quote
-```
-- 下記のファイルを編集し、177行目あたりの`@modules`を読み込んでいる箇所に`YahooJapanA`, `YahooJapanB`を追加
-```
-/Library/Perl/5.28/Finance/Quote.pm
-```
-追加部分のイメージ
-```
-@modules = qw/AEX AIAHK AlphaVantage ASEGR ASX BMONesbittBurns BSERO Bourso Cdnfundlibrary Citywire CSE Currencies DekaDWS FTPortfolios Fidelity FidelityFixed FinanceCanada FoolFTfunds HU GoldMoney HEX IndiaMutual LeRevenuManInvestments Morningstar MorningstarJP MStaruk NZXPlatinum SEB SIXfunds SIXshares StockHouseCanada TSP TSXTdefunds Tdwaterhouse Tiaacref TNetuk Troweprice TrustnetUnion USFedBonds VWD ZA Cominvest Finanzpartner YahooJSONYahoo::Asia Yahoo::Australia Yahoo::Brasil Yahoo::EuropeYahoo::NZ Yahoo::USA YahooYQL ZA_UnitTrusts YahooJapanA YahooJapanB/; }
-```
+下記のモジュールがインストール済であることが前提です。
+  - Perl  
+  - Finance::Quote  
+  - ~~Web::Scraper~~ ←YahooJapanAのみで必要なため現在は不要
+- インストール概要
+  - Finance::QuoteのモジュールがあるディレクトリのQuoteletをコピー
+  - Finance::QuoteのQuote.pmを更新して`@MODULES`配列に`YahooJapanB`を追加
+  - テストを実施してインストールが正常に行われていることを確認
+- インストール手順
+  - `script/install.sh`を実行する。（スクリプトの内容が適切か見直した上で実行することを推奨）
+  ```
+  $ ./script/install.sh
+  ```
 
-## 開発ノート
-- `%info`の`success`を`0`で戻すとGnuCash上は（システムエラーではなく）見積もりが取得できなかったという扱いになる。  
+## GnuCashの設定方法
+YahooJapanBモジュールをGnuCashで使用するには証券エディターで対象の投資信託のオンライン取得設定を下記のように設定します。  
+
+
+評価額を取得するには価格エディターで「XXXXX」をクリックします。
+
+
+
+## （参考） 開発メモ
+- `%info`の`success`を`0`で戻すとGnuCash上はシステムエラーとはならない。（見積もりが取得できなかったという扱いになる）  
 - 平日の相場が開く前のタイミングでは価格に`---`が戻される。YahooJapanAではこれを`success=1（取得エラー）`として扱っている。  
-
-## ToDoList
-- GnuCashでの設定方法を記載  
-- 単体テストコードの作成  
