@@ -6,7 +6,7 @@ set -e -o pipefail
 ##
 readonly PROJ_DIR=$(dirname ${BASH_SOURCE:-$0})/../
 readonly FQ_ROOT=$(dirname $(perldoc -l Finance::Quote))
-readonly DO_TEST=false
+readonly DO_TEST=true
 
 # copy quotelets
 #QUOTELETS="YahooJapanA.pm YahooJapanB.pm"
