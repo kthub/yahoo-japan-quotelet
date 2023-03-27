@@ -33,8 +33,8 @@
 ## インストール方法
 - 前提モジュール  
 下記のモジュールがインストール済であることが前提です。
-  - Perl  
-  - Finance::Quote  
+  - Perl (Perlだけでなく`perl-doc`packageが導入されていることも必要)  
+  - Finance::Quote (GnuCashをインストールすれば同時にインストールされる)  
   - ~~Web::Scraper~~ ←YahooJapanAのみで必要なため現在は不要
 - インストール概要
   - Finance::QuoteのモジュールがあるディレクトリのQuoteletをコピー
