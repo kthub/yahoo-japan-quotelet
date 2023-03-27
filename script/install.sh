@@ -26,6 +26,7 @@ sudo perl ${PROJ_DIR}/script/updateFQ.pl ${FQ_ROOT}/Quote.pm "${QUOTELETS}"
 
 # test quotelets
 if "${DO_TEST}"; then
-  cd ${PROJ_DIR}
+  pushd ${PROJ_DIR}
   prove t
+  popd
 fi
